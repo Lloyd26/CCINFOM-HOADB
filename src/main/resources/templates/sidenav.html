@@ -1,0 +1,43 @@
+<nav th:fragment="sidenav" class="sidenav navbar navbar-vertical navbar-expand-xs fixed-start my-3 ms-3">
+    <div class="sidenav-header">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-database"></i>
+            <span class="nav-link-text ms-3 font-weight-bold">HOA Database</span>
+        </a>
+    </div>
+    <hr class="horizontal dark mt-1 mb-4" />
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items center justify-content-center ni ni-chart-bar-32"></div>
+                    <span class="nav-link-text ms-3">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/homeowners">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items center justify-content-center fas fa-house-user"></div>
+                    <span class="nav-link-text ms-3">Homeowners</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/people">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items center justify-content-center fas fa-users"></div>
+                    <span class="nav-link-text ms-3">People</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/properties">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items center justify-content-center fas fa-city"></div>
+                    <span class="nav-link-text ms-3">Properties</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/officers">
+                    <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items center justify-content-center fas fa-user"></div>
+                    <span class="nav-link-text ms-3">Officers</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

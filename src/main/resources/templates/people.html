@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/soft-ui-dashboard-main/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/soft-ui-dashboard-main/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/soft-ui-dashboard-main/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+
+    <!-- Core -->
+    <script src="/soft-ui-dashboard-main/assets/js/core/popper.min.js"></script>
+    <script src="/soft-ui-dashboard-main/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="/soft-ui-dashboard-main/assets/js/soft-ui-dashboard.min.js"></script>
+
+    <title>HOA Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <script>
+        window.onload = function() {
+            var genders = document.querySelectorAll("main table > tbody > tr > td > span.badge");
+            for (var i = 0; i < genders.length; i++) {
+                var element = genders[i];
+                if (element.innerText == "M") {
+                    element.classList.add("bg-gradient-info");
+                    element.innerText = "MALE";
+                } else if (element.innerText == "F") {
+                    element.classList.add("bg-gradient-danger");
+                    element.innerText = "FEMALE";
+                }
+            }
+
+            var undertakings = document.querySelectorAll("main table > tbody > tr > td:nth-child(5)");
+            for (var i = 0; i < undertakings.length; i++) {
+                if (undertakings[i].innerText == "true") {
+                    undertakings[i].innerHTML = "<i class='fas fa-check text-success'></i>"
+                } else if (undertakings[i].innerText == "false") {
+                    undertakings[i].innerHTML = "<i class='fa fa-close text-danger'></i>"
+                }
+            }
+
+            var birthdays = document.querySelectorAll("main table > tbody > tr > td:nth-child(3)");
+            for (var i = 0; i < birthdays.length; i++) {
+                birthdays[i].textContent = birthdays[i].textContent.replace(/-/g, "/");
+            }
+
+            var mobile_numbers = document.querySelectorAll(".mobile-number");
+            for (var i = 0; i < mobile_numbers.length; i++) {
+                let left = mobile_numbers[i].textContent.substring(0, 3);
+                let mid = mobile_numbers[i].textContent.substring(3, 6);
+                let right = mobile_numbers[i].textContent.substring(6);
+
+                mobile_numbers[i].textContent = left + "-" + mid + "-" + right;
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var nav_links = document.querySelectorAll("nav.sidenav .navbar-nav > .nav-item > .nav-link");
+            nav_links.forEach(function(item) {
+                if (item.children[1].textContent == "People") {
+                    item.classList.add("active");
+                    item.children[0].classList.add("text-white");
+                }
+            });
+            document.querySelector("nav.sidenav").setAttribute("data-color", "success");
+        });
+    </script>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+<nav th:replace="sidenav :: sidenav"></nav>
+<main class="main-content position-relative max-height-vh-100 h-100">
+    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl shadow-none mt-4">
+        <div class="container-fluid py-1 px-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                    <li class="breadcrumb-item text-sm">
+                        <a class="opacity-5 text-dark" href="#">Pages</a>
+                    </li>
+                    <li class="breadcrumb-item text-sm text-dark active">
+                        People
+                    </li>
+                </ol>
+                <h6 class="font-weight-bolder mb-0">People</h6>
+            </nav>
+            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4">
+                <ul class="navbar-nav ms-md-auto justify-content-end">
+                    <li class="nav-item d-flex align-items-center">
+                        <a class="nav-link text-body font-weight-bold px-0">
+                            <i class="fas fa-user-circle"></i>
+                            <span class="nav-link-text ms-2">Sign In</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-body p-4">
+                <div class="d-flex mb-2 p-3">
+                    <h3 class="font-weight-bolder mb-0">People</h3>
+                    <button class="btn btn-success ms-auto p-2 ps-3 pe-3 mb-0" data-bs-toggle="modal" data-bs-target="#modal-add">
+                        <i class="fa fa-plus"></i>
+                        <span class="ms-2">Add</span>
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center justify-content center">
+                        <thead>
+                        <tr>
+                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs">Profile</th>
+                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">ID</th>
+                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Birthday</th>
+                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Gender</th>
+                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Contact Details</th>
+                            <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="people: ${people}">
+                            <td class="text-sm font-weight-bold opacity-7">
+                                <div class="d-flex px-2 py-1">
+                                    <img crossorigin="anonymous" class="avatar avatar-sm me-3" th:src="${#strings.concat('https://api.dicebear.com/6.x/thumbs/svg?seed=',people.firstName,people.lastName)}">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <h6 class="mb-0" th:text="${people.firstName} + ' ' + ${people.lastName}"></h6>
+                                        <p class="text-xs text-secondary mb-0">
+                                            <i class="fa fa-facebook-square"></i>
+                                            <a class="ms-1" th:text="${#lists.isEmpty(people.facebook) ? 'Not provided' : people.facebook}" th:href="${#lists.isEmpty(people.facebook) ? '#' : #strings.concat('https://', people.facebook)}"></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${people.id}"></td>
+                            <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${people.birthday}"></td>
+                            <td class="text-sm font-weight-bold opacity-7 text-center">
+                                <span class="badge badge-sm" th:text="${people.gender}"></span>
+                            </td>
+                            <td class="text-sm font-weight-bold opacity-7">
+                                <div>
+                                    <i class="fas fa-envelope"></i>
+                                    <span class="ms-1" th:text="${#lists.isEmpty(people.email) ? 'No email provided' : people.email}">No email provided</span>
+                                </div>
+                                <div>
+                                    <span class="me-2" th:each="mobileNumber: ${people.mobileNumber}">
+                                        <i class="fas fa-phone fa-rotate-90"></i>
+                                        <span class="ms-1 mobile-number" th:text="${mobileNumber.mobileNumber}">No mobile number provided</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <!--<td class="text-sm font-weight-bold opacity-7 text-center">
+                                <th:block th:each="mobileNumber: ${people.mobileNumber}">
+                                    <div>
+                                        <i class="fas fa-phone"></i>
+                                        <span class="ms-2" th:text="${mobileNumber.mobileNumber}"></span>
+                                    </div>
+                                </th:block>
+                            </td>-->
+                            <td class="text-sm text-center">
+                                <button class="btn btn-outline-warning btn-icon p-2 mb-0 text-capitalize">
+                                    <i class="fa fa-pencil-square"></i>
+                                    <span class="ms-2">Edit</span>
+                                </button>
+                                <button class="btn btn-outline-danger btn-icon p-2 mb-0 ms-1 text-capitalize">
+                                    <i class="fa fa-trash-o"></i>
+                                    <span class="ms-2">Delete</span>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-add">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Individual</h5>
+                    <button class="btn-close text-dark" data-bs-dismiss="modal">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/api/individuals" method="post" id="individual_add">
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="first_name" class="form-control-label">First Name</label>
+                                    <input type="text" id="first_name" name="first_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="last_name" class="form-control-label">Last Name</label>
+                                    <input type="text" id="last_name" name="last_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="form-control-label">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="birthday" class="form-control-label">Birthday</label>
+                                    <input type="date" id="birthday" name="birthday" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label mb-3">Gender</label>
+
+                                    <div class="d-flex align-items-center">
+                                        <div class="form-check">
+                                            <label for="gender_male" class="form-control-label">Male</label>
+                                            <input type="radio" id="gender_male" name="gender" value="M" class="form-check-input" required>
+                                        </div>
+                                        <div class="form-check ms-4">
+                                            <label for="gender_female" class="form-control-label">Female</label>
+                                            <input type="radio" id="gender_female" name="gender" value="F" class="form-check-input" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="facebookURL" class="form-control-label">Facebook Profile URL</label>
+                                    <input type="url" id="facebookURL" name="facebookURL" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="picture" class="form-control-label">Profile Picture</label>
+                                    <input type="file" accept="image/*" id="picture" name="picturefilename" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="row">
+                            <div class="col-md-12">
+                                <div class="form-check">
+                                    <input type="checkbox" id="undertaking" name="undertaking" class="form-check-input">
+                                    <label for="undertaking" class="form-control-label">Undertaking</label>
+                                </div>
+                            </div>
+                        </div>-->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary mb-0" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="individual_add" class="btn bg-gradient-success mb-0">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
