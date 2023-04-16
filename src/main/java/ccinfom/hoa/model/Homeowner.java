@@ -52,7 +52,7 @@ public class Homeowner {
             precision = 7, scale = 4)
     private Float otherLongitude;
 
-    @Column(name = "other_latitude",
+    @Column(name = "other_lattitude",
             columnDefinition = "DECIMAL",
             precision = 7, scale = 4)
     private Float otherLatitude;
