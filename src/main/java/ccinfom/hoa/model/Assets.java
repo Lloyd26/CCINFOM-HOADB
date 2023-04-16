@@ -10,7 +10,7 @@ import java.util.Date;
 public class Assets {
 
     @Id
-    @Column(name = "asset_id", nullable = false, length = 45)
+    @Column(name = "asset_id", nullable = false)
     private Integer id;
 
     @Column(name = "asset_name", nullable = false, length = 45)
@@ -30,11 +30,11 @@ public class Assets {
     @Column(name = "asset_value", nullable = false, precision = 9, scale = 2)
     private Double assetValue;
 
-    @Column(columnDefinition = "ENUM('P', 'E', 'F', 'O')")
+    @Column(columnDefinition = "ENUM('P', 'E', 'F', 'O')", nullable = false)
     @Enumerated(EnumType.STRING)
     private Character typeAsset;
 
-    @Column(columnDefinition = "ENUM('W', 'D', 'P', 'S', 'X')")
+    @Column(columnDefinition = "ENUM('W', 'D', 'P', 'S', 'X')", nullable = false)
     @Enumerated(EnumType.STRING)
     private Character status;
 
@@ -47,7 +47,7 @@ public class Assets {
     @Column(name = "hoa_name", nullable = false, length = 45)
     private Hoa hoaName;
 
-    @Column(name = "enclosing_asset", nullable = false)
+    @Column(name = "enclosing_asset")
     private Integer enclosingAsset;
 
     @Column(name = "isDeleted", nullable = false)
@@ -147,5 +147,13 @@ public class Assets {
 
     public void setEnclosingAsset(Integer enclosingAsset) {
         this.enclosingAsset = enclosingAsset;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 }
