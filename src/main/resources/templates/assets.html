@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/soft-ui-dashboard-main/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/soft-ui-dashboard-main/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/soft-ui-dashboard-main/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+
+    <!-- Core -->
+    <script src="/soft-ui-dashboard-main/assets/js/core/popper.min.js"></script>
+    <script src="/soft-ui-dashboard-main/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="/soft-ui-dashboard-main/assets/js/soft-ui-dashboard.min.js"></script>
+
+    <title>HOA Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            var nav_links = document.querySelectorAll("nav.sidenav .navbar-nav > .nav-item > .nav-link");
+            nav_links.forEach(function(item) {
+                if (item.children[1].textContent == "Assets") {
+                    item.classList.add("active");
+                    item.children[0].classList.add("text-white");
+                }
+            });
+            document.querySelector("nav.sidenav").setAttribute("data-color", "dark");
+        });
+    </script>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+<nav th:replace="sidenav :: sidenav"></nav>
+<main class="main-content position-relative max-height-vh-100 h-100">
+    <nav th:replace="navbar :: navbar"></nav>
+    <div class="container-fluid py-4">
+        <div class="card">
+            <div class="card-body p-4">
+                <div class="d-flex mb-2 p-3">
+                    <h3 class="font-weight-bolder mb-0" th:text="${page_title}"></h3>
+                    <a class="btn btn-success ms-auto p-2 ps-3 pe-3 mb-0 d-flex align-items-center" href="/assets/create">
+                        <i class="fa fa-plus"></i>
+                        <span class="ms-2">Add</span>
+                    </a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table align-items-center justify-content-center">
+                        <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">ID</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Name</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Description</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Acquisition Date</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">For Rent</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Value</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Type</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Status</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Location (Latitude)</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Location (Longitude)</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">HOA</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs text-center">Enclosing Asset</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="assets: ${assets}">
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.id}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 ps-2" th:text="${assets.assetName}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 ps-2" th:text="${assets.assetDescription}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.acquisitionDate}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.forrent}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.assetValue}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.typeAsset}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.status}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.locLattitude}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${assets.locLongiture}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 ps-2" th:text="${assets.hoaName.id}"></td>
+                                <td class="text-sm font-weight-bold opacity-7 text-center" th:text="${not #lists.isEmpty(assets.enclosingAsset)}? ${assets.enclosingAsset.id} : ''"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
