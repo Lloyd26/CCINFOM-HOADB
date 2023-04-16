@@ -1,109 +1,121 @@
 package ccinfom.hoa.model;
 
+import ccinfom.hoa.model.id.OfficerId;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "officer")
 public class Officer {
+    @EmbeddedId
+    private OfficerId id;
 
-    @Id
-    @Column(name = "ho_id", nullable = false)
-    private Homeowner id;
+    @MapsId("homeownerID")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "ho_id", nullable = false)
+    private Homeowner ho;
 
-    @Id
-    @Column(name = "position", nullable = false, length = 45)
-    private RefPositions position;
+    @MapsId("position")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "position", nullable = false)
+    private RefPosition position;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @MapsId("electionDate")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "election_date", nullable = false)
+    private Election electionDate;
+
     @Column(name = "start_date", nullable = false)
-    private Date startDate;
+    private LocalDate startDate;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "end_date", nullable = false)
-    private Date endDate;
+    private LocalDate endDate;
 
-    @Id
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "election_date", nullable = false)
-    private Elections electionDate;
-
-    @Column(columnDefinition = "ENUM('M', 'A')", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Character availability_time;
+    @Lob
+    @Column(name = "availability_time", nullable = false)
+    private String availabilityTime;
 
     @Column(name = "M", nullable = false)
-    private Boolean m;
+    private Boolean m = false;
 
     @Column(name = "T", nullable = false)
-    private Boolean t;
+    private Boolean t = false;
 
     @Column(name = "W", nullable = false)
-    private Boolean w;
+    private Boolean w = false;
 
     @Column(name = "H", nullable = false)
-    private Boolean h;
+    private Boolean h = false;
 
     @Column(name = "F", nullable = false)
-    private Boolean f;
+    private Boolean f = false;
 
     @Column(name = "S", nullable = false)
-    private Boolean s;
+    private Boolean s = false;
 
     @Column(name = "N", nullable = false)
-    private Boolean n;
+    private Boolean n = false;
 
-    public Homeowner getId() {
+    @OneToMany(mappedBy = "officer")
+    private Set<OfficerPresident> officerPresidents = new LinkedHashSet<>();
+
+    public OfficerId getId() {
         return id;
     }
 
-    public void setId(Homeowner id) {
+    public void setId(OfficerId id) {
         this.id = id;
     }
 
-    public RefPositions getPosition() {
+    public Homeowner getHo() {
+        return ho;
+    }
+
+    public void setHo(Homeowner ho) {
+        this.ho = ho;
+    }
+
+    public RefPosition getPosition() {
         return position;
     }
 
-    public void setPosition(RefPositions position) {
+    public void setPosition(RefPosition position) {
         this.position = position;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Elections getElectionDate() {
+    public Election getElectionDate() {
         return electionDate;
     }
 
-    public void setElectionDate(Elections electionDate) {
+    public void setElectionDate(Election electionDate) {
         this.electionDate = electionDate;
     }
 
-    public Character getAvailability_time() {
-        return availability_time;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setAvailability_time(Character availability_time) {
-        this.availability_time = availability_time;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getAvailabilityTime() {
+        return availabilityTime;
+    }
+
+    public void setAvailabilityTime(String availabilityTime) {
+        this.availabilityTime = availabilityTime;
     }
 
     public Boolean getM() {
@@ -161,4 +173,13 @@ public class Officer {
     public void setN(Boolean n) {
         this.n = n;
     }
+
+    public Set<OfficerPresident> getOfficerPresidents() {
+        return officerPresidents;
+    }
+
+    public void setOfficerPresidents(Set<OfficerPresident> officerPresidents) {
+        this.officerPresidents = officerPresidents;
+    }
+
 }
