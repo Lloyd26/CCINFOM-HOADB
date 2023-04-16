@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="/soft-ui-dashboard-main/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/soft-ui-dashboard-main/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Files -->
+    <link id="pagestyle" href="/soft-ui-dashboard-main/assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+
+    <!-- Core -->
+    <script src="/soft-ui-dashboard-main/assets/js/core/popper.min.js"></script>
+    <script src="/soft-ui-dashboard-main/assets/js/core/bootstrap.min.js"></script>
+
+    <!-- Theme JS -->
+    <script src="/soft-ui-dashboard-main/assets/js/soft-ui-dashboard.min.js"></script>
+
+    <title>HOA Database</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <style>
+        .form-switch .form-check-input {
+            width: 4rem;
+            height: 2rem;
+        }
+        .form-switch .form-check-input:after {
+            width: 1.5rem;
+            height: 1.5rem;
+            top: 3px;
+        }
+        .form-switch .form-check-input:checked:after {
+            transform: translateX(35px);
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+<div class="container max-height-vh-100 vh-100 d-flex align-items-center justify-content-center">
+<div class="card p-4">
+    <h4 class="mb-4">Create Asset</h4>
+    <form action="/api/assets" method="post">
+        <div class="row g-3">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="assetId" class="form-control-label">ID</label>
+                    <input type="number" id="assetId" name="assetId" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="assetName" class="form-control-label">Name</label>
+                    <input type="text" id="assetName" name="assetName" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="assetDescription" class="form-control-label">Description</label>
+                    <input type="text" id="assetDescription" name="assetDescription" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="acquisitionDate" class="form-control-label">Acquisition Date</label>
+                    <input type="date" id="acquisitionDate" name="acquisitionDate" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="assetValue" class="form-control-label">Value</label>
+                    <input type="number" id="assetValue" name="assetValue" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="forrent" class="form-control-label">For Rent</label>
+                    <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" name="forrent" id="forrent">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="form-control-label">Type</label>
+                    <select class="form-control" name="typeAsset" required>
+                        <option selected hidden disabled>Type</option>
+                        <option value="P">Property</option>
+                        <option value="E">Equipment</option>
+                        <option value="F">Furniture & Fixtures</option>
+                        <option value="O">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="assetDescription" class="form-control-label">Status</label>
+                    <select class="form-control" name="status" required>
+                        <option selected hidden disabled>Status</option>
+                        <option value="W">Working</option>
+                        <option value="D">Deteriorated</option>
+                        <option value="P">For Repair</option>
+                        <option value="S">For Disposal</option>
+                        <option value="X">Disposed</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="locLattitude" class="form-control-label">Location (Latitude)</label>
+                    <input type="text" id="locLattitude" name="locLattitude" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="locLongiture" class="form-control-label">Location (Longitude)</label>
+                    <input type="text" id="locLongiture" name="locLongiture" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="hoaName" class="form-control-label">HOA Name</label>
+                    <select class="form-control" name="hoaName" id="hoaName" required>
+                        <option selected hidden disabled>HOA Name</option>
+                        <th:block th:each="hoa_names: ${hoa_name}">
+                            <option th:text="${hoa_names}"></option>
+                        </th:block>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="enclosingAsset" class="form-control-label">Enclosing Asset</label>
+                    <input type="number" id="enclosingAsset" name="enclosingAsset" class="form-control">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn bg-gradient-success mb-0 w-100">Submit</button>
+    </form>
+</div>
+</div>
+</body>
