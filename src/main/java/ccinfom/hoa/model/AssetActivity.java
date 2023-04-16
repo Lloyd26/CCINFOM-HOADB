@@ -1,138 +1,117 @@
 package ccinfom.hoa.model;
 
+import ccinfom.hoa.model.id.AssetActivityId;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "asset_activity")
 public class AssetActivity {
+    @EmbeddedId
+    private AssetActivityId id;
 
-    @Id
-    @Column(name = "asset_id", nullable = false)
-    private Integer id;
-
-    @Id
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "activity_date")
-    private Date activtyDate;
-
+    @MapsId("asset_id")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumns({
-            @JoinColumn(name = "asset_id", referencedColumnName = "asset_id", nullable = false),
-            @JoinColumn(name = "activity_date", referencedColumnName = "transaction_date", nullable = false),
+            @JoinColumn(name = "asset_id", nullable = false, referencedColumnName = "asset_id"),
+            @JoinColumn(name = "activity_date", nullable = false, referencedColumnName = "transaction_date")
     })
-    private AssetTransactions assetTransactions;
+    private AssetTransaction asset;
 
     @Column(name = "activity_description", length = 45)
-    private String activityName;
+    private String activityDescription;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "tent_start")
-    private Date tentStart;
+    private LocalDate tentStart;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "tent_end")
-    private Date tentEnd;
+    private LocalDate tentEnd;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "act_start")
-    private Date actStart;
+    private LocalDate actStart;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "act_end")
-    private Date actEnd;
+    private LocalDate actEnd;
 
     @Column(name = "cost", precision = 9, scale = 2)
-    private Double cost;
+    private BigDecimal cost;
 
-    @Column(columnDefinition = "ENUM('S', 'O', 'C')", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Character status;
+    @Lob
+    @Column(name = "status", nullable = false)
+    private String status;
 
-    public Integer getId() {
+    public AssetActivityId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(AssetActivityId id) {
         this.id = id;
     }
 
-    public Date getActivtyDate() {
-        return activtyDate;
+    public AssetTransaction getAsset() {
+        return asset;
     }
 
-    public void setActivtyDate(Date activtyDate) {
-        this.activtyDate = activtyDate;
+    public void setAsset(AssetTransaction asset) {
+        this.asset = asset;
     }
 
-    public AssetTransactions getAssetTransactions() {
-        return assetTransactions;
+    public String getActivityDescription() {
+        return activityDescription;
     }
 
-    public void setAssetTransactions(AssetTransactions assetTransactions) {
-        this.assetTransactions = assetTransactions;
+    public void setActivityDescription(String activityDescription) {
+        this.activityDescription = activityDescription;
     }
 
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
-    }
-
-    public Date getTentStart() {
+    public LocalDate getTentStart() {
         return tentStart;
     }
 
-    public void setTentStart(Date tentStart) {
+    public void setTentStart(LocalDate tentStart) {
         this.tentStart = tentStart;
     }
 
-    public Date getTentEnd() {
+    public LocalDate getTentEnd() {
         return tentEnd;
     }
 
-    public void setTentEnd(Date tentEnd) {
+    public void setTentEnd(LocalDate tentEnd) {
         this.tentEnd = tentEnd;
     }
 
-    public Date getActStart() {
+    public LocalDate getActStart() {
         return actStart;
     }
 
-    public void setActStart(Date actStart) {
+    public void setActStart(LocalDate actStart) {
         this.actStart = actStart;
     }
 
-    public Date getActEnd() {
+    public LocalDate getActEnd() {
         return actEnd;
     }
 
-    public void setActEnd(Date actEnd) {
+    public void setActEnd(LocalDate actEnd) {
         this.actEnd = actEnd;
     }
 
-    public Double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
-    public Character getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Character status) {
+    public void setStatus(String status) {
         this.status = status;
     }
+
 }

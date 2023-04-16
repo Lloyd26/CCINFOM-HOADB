@@ -1,56 +1,129 @@
 package ccinfom.hoa.model;
 
+import ccinfom.hoa.model.id.AssetTransferId;
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
-import java.util.Date;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "asset_transfer")
 public class AssetTransfer {
+    @EmbeddedId
+    private AssetTransferId id;
 
-    @Id
-    @Column(name = "asset_id", nullable = false)
-    private Integer id;
-
-    @Id
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "schedule_date")
-    private Date scheduleDate;
-
+    @MapsId("asset_id")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumns({
-            @JoinColumn(name = "asset_id", referencedColumnName = "asset_id", nullable = false),
-            @JoinColumn(name = "schedule_date", referencedColumnName = "transaction_date", nullable = false),
+            @JoinColumn(name = "asset_id", nullable = false, referencedColumnName = "asset_id"),
+            @JoinColumn(name = "schedule_date", nullable = false, referencedColumnName = "transaction_date")
     })
-    private AssetTransactions assetTransactions;
+    private AssetTransaction asset;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "act_date")
-    private Date actDate;
+    private LocalDate actDate;
 
     @Column(name = "source_lattitude", nullable = false, precision = 7, scale = 4)
-    private Double sourceLattitude;
+    private BigDecimal sourceLattitude;
 
     @Column(name = "source_longitude", nullable = false, precision = 7, scale = 4)
-    private Double sourceLongitude;
+    private BigDecimal sourceLongitude;
 
-    @Column(name = "dest_lattitude", nullable = false, precision = 7, scale = 4)
-    private Double destLattitude;
+    @Column(name = "dest_latittude", nullable = false, precision = 7, scale = 4)
+    private BigDecimal destLatittude;
 
     @Column(name = "dest_longitude", nullable = false, precision = 7, scale = 4)
-    private Double destLongitude;
+    private BigDecimal destLongitude;
 
     @Column(name = "transfer_cost", precision = 9, scale = 2)
-    private Double transferCost;
+    private BigDecimal transferCost;
 
-    @Column(columnDefinition = "ENUM('S', 'O', 'C')", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Character status;
+    @Lob
+    @Column(name = "status", nullable = false)
+    private String status;
 
-    @Column(name = "completename", nullable = false, length = 45)
-    private Outsiders completeName;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "completename", nullable = false)
+    private Outsider completename;
 
+    public AssetTransferId getId() {
+        return id;
+    }
+
+    public void setId(AssetTransferId id) {
+        this.id = id;
+    }
+
+    public AssetTransaction getAsset() {
+        return asset;
+    }
+
+    public void setAsset(AssetTransaction asset) {
+        this.asset = asset;
+    }
+
+    public LocalDate getActDate() {
+        return actDate;
+    }
+
+    public void setActDate(LocalDate actDate) {
+        this.actDate = actDate;
+    }
+
+    public BigDecimal getSourceLattitude() {
+        return sourceLattitude;
+    }
+
+    public void setSourceLattitude(BigDecimal sourceLattitude) {
+        this.sourceLattitude = sourceLattitude;
+    }
+
+    public BigDecimal getSourceLongitude() {
+        return sourceLongitude;
+    }
+
+    public void setSourceLongitude(BigDecimal sourceLongitude) {
+        this.sourceLongitude = sourceLongitude;
+    }
+
+    public BigDecimal getDestLatittude() {
+        return destLatittude;
+    }
+
+    public void setDestLatittude(BigDecimal destLatittude) {
+        this.destLatittude = destLatittude;
+    }
+
+    public BigDecimal getDestLongitude() {
+        return destLongitude;
+    }
+
+    public void setDestLongitude(BigDecimal destLongitude) {
+        this.destLongitude = destLongitude;
+    }
+
+    public BigDecimal getTransferCost() {
+        return transferCost;
+    }
+
+    public void setTransferCost(BigDecimal transferCost) {
+        this.transferCost = transferCost;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Outsider getCompletename() {
+        return completename;
+    }
+
+    public void setCompletename(Outsider completename) {
+        this.completename = completename;
+    }
 
 }
