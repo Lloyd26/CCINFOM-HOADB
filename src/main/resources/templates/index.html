@@ -45,31 +45,7 @@
 <body class="g-sidenav-show bg-gray-100">
 <nav th:replace="sidenav :: sidenav"></nav>
 <main class="main-content position-relative max-height-vh-100 h-100">
-    <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl shadow-none mt-4">
-        <div class="container-fluid py-1 px-3">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-                    <li class="breadcrumb-item text-sm">
-                        <a class="opacity-5 text-dark" href="#">Pages</a>
-                    </li>
-                    <li class="breadcrumb-item text-sm text-dark active">
-                        Dashboard
-                    </li>
-                </ol>
-                <h6 class="font-weight-bolder mb-0">Dashboard</h6>
-            </nav>
-            <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4">
-                <ul class="navbar-nav ms-md-auto justify-content-end">
-                    <li class="nav-item d-flex align-items-center">
-                        <a class="nav-link text-body font-weight-bold px-0">
-                            <i class="fas fa-user-circle"></i>
-                            <span class="nav-link-text ms-2">Sign In</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <nav th:replace="navbar :: navbar"></nav>
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -143,7 +119,7 @@
                                 <div class="col-8">
                                     <div class="numbers">
                                         <p class="text-sm mb-0 text-capitalize font-weight-bold">Officers</p>
-                                        <h5 class="font-weight-bolder mb-0">10</h5>
+                                        <h5 class="font-weight-bolder mb-0" th:text="${officers_count}">10</h5>
                                     </div>
                                 </div>
                                 <div class="col-4 text-end">
@@ -157,34 +133,30 @@
                 </div>
             </div>
         </div>
-        <div class="card mt-4">
-            <div class="card-body p-5">
-                <h3 class="font-weight-bolder">Programs</h3>
-                <p class="mb-1 pt-2">There are no currently active programs.</p>
-            </div>
-        </div>
         <div class="row mt-4">
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card">
                     <div class="card-body p-4">
-                        <h4 class="font-weight-bolder p-2">Recent People</h4>
-                        <table class="table align-items-center justify-content center mb-4">
-                            <thead>
-                            <tr>
-                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">People ID</th>
-                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">First Name</th>
-                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Last Name</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="people: ${recent_people}">
-                                <td class="text-sm font-weight-bold opacity-7" th:text="${people.id}"></td>
-                                <td class="text-sm font-weight-bold opacity-7" th:text="${people.firstName}"></td>
-                                <td class="text-sm font-weight-bold opacity-7" th:text="${people.lastName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <a href="/people" class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto">
+                        <h4 class="font-weight-bolder p-2">Assets</h4>
+                        <div class="table-responsive">
+                            <table class="table align-items-center justify-content center mb-4">
+                                <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-center font-weight-bolder opacity-7 text-xs">Asset ID</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Name</th>
+                                    <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="assets: ${recent_assets}">
+                                    <td class="text-sm text-center font-weight-bold opacity-7" th:text="${assets.id}"></td>
+                                    <td class="text-sm font-weight-bold opacity-7" th:text="${assets.assetName}"></td>
+                                    <td class="text-sm opacity-7" th:text="${assets.assetDescription}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="/assets" class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto">
                             View more
                             <i class="fas fa-arrow-right text-sm ms-1"></i>
                         </a>
@@ -193,12 +165,28 @@
             </div>
             <div class="col-lg-6 mb-lg-0 mb-4">
                 <div class="card">
-                    <div class="card-body p-5">
-                        <h4 class="font-weight-bolder">Recent Homeowners</h4>
-                        <p class="mb-1 pt-2">No homeowners found.</p>
-                        <div th:each="zipcode: ${zipcodes}">
-                            <p th:text="${zipcode.id.province}"></p>
-                        </div>
+                    <div class="card-body p-4">
+                        <h4 class="font-weight-bolder p-2">Donations</h4>
+                        <table class="table align-items-center justify-content center mb-4">
+                            <thead>
+                            <tr>
+                                <th class="text-uppercase text-secondary text-center font-weight-bolder opacity-7 text-xs">Donation ID</th>
+                                <th class="text-uppercase text-secondary font-weight-bolder opacity-7 text-xs ps-2">Donor Name</th>
+                                <th class="text-uppercase text-secondary text-center font-weight-bolder opacity-7 text-xs">Date Donated</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="donations: ${recent_donations}">
+                                <td class="text-sm text-center font-weight-bold opacity-7" th:text="${donations.id}"></td>
+                                <td class="text-sm font-weight-bold opacity-7" th:text="${donations.donorCompletename.id}"></td>
+                                <td class="text-sm text-center font-weight-bold opacity-7" th:text="${donations.dateDonation}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a href="/donations" class="text-body text-sm font-weight-bold mb-0 icon-move-right mt-auto">
+                            View more
+                            <i class="fas fa-arrow-right text-sm ms-1"></i>
+                        </a>
                     </div>
                 </div>
             </div>
