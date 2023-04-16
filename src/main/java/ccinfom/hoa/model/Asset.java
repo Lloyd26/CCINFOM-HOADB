@@ -49,6 +49,23 @@ public class Asset {
     @JoinColumn(name = "enclosing_asset")
     private Asset enclosingAsset;
 
+    public Asset() {}
+
+    public Asset(Integer id, String assetName, String assetDescription, LocalDate acquisitionDate, Boolean forrent, BigDecimal assetValue, String typeAsset, String status, BigDecimal locLattitude, BigDecimal locLongiture, Hoa hoaName, Asset enclosingAsset) {
+        this.id = id;
+        this.assetName = assetName;
+        this.assetDescription = assetDescription;
+        this.acquisitionDate = acquisitionDate;
+        this.forrent = forrent;
+        this.assetValue = assetValue;
+        this.typeAsset = typeAsset;
+        this.status = status;
+        this.locLattitude = locLattitude;
+        this.locLongiture = locLongiture;
+        this.hoaName = hoaName;
+        this.enclosingAsset = enclosingAsset;
+    }
+
     public Integer getId() {
         return id;
     }
