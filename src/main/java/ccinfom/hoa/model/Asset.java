@@ -38,8 +38,8 @@ public class Asset {
     @Column(name = "loc_lattitude", nullable = false, precision = 7, scale = 4)
     private BigDecimal locLattitude;
 
-    @Column(name = "loc_longiture", nullable = false, precision = 7, scale = 4)
-    private BigDecimal locLongiture;
+    @Column(name = "loc_longitude", nullable = false, precision = 7, scale = 4)
+    private BigDecimal locLongitude;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "hoa_name", nullable = false)
@@ -61,7 +61,7 @@ public class Asset {
         this.typeAsset = typeAsset;
         this.status = status;
         this.locLattitude = locLattitude;
-        this.locLongiture = locLongiture;
+        this.locLongitude = locLongitude;
         this.hoaName = hoaName;
         this.enclosingAsset = enclosingAsset;
     }
@@ -138,12 +138,12 @@ public class Asset {
         this.locLattitude = locLattitude;
     }
 
-    public BigDecimal getLocLongiture() {
-        return locLongiture;
+    public BigDecimal getLocLongitude() {
+        return locLongitude;
     }
 
-    public void setLocLongiture(BigDecimal locLongiture) {
-        this.locLongiture = locLongiture;
+    public void setLocLongitude(BigDecimal locLongitude) {
+        this.locLongitude = locLongitude;
     }
 
     public Hoa getHoaName() {

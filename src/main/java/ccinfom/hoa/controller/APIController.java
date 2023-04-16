@@ -84,7 +84,7 @@ public class APIController {
             @RequestParam String typeAsset,
             @RequestParam String status,
             @RequestParam BigDecimal locLattitude,
-            @RequestParam BigDecimal locLongiture,
+            @RequestParam BigDecimal locLongitude,
             @RequestParam Hoa hoaName,
             @RequestParam(required = false) Asset enclosingAsset) {
         Asset asset = new Asset();
@@ -97,7 +97,7 @@ public class APIController {
         asset.setTypeAsset(typeAsset);
         asset.setStatus(status);
         asset.setLocLattitude(locLattitude);
-        asset.setLocLongiture(locLongiture);
+        asset.setLocLongitude(locLongitude);
         asset.setHoaName(hoaName);
         asset.setEnclosingAsset(enclosingAsset);
         assetRepository.save(asset);
